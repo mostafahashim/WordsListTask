@@ -2,6 +2,7 @@ package words.list.task.view.activity.main
 
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.webkit.JavascriptInterface
 import androidx.lifecycle.MutableLiveData
 import org.jsoup.Jsoup
@@ -52,17 +53,22 @@ class MainViewModel(
         fun showHTML(html: String) {
             val entries: ArrayList<String> = ArrayList()
             Handler(Looper.getMainLooper()).post {
-                Jsoup.parse(html).also {doc->
-                    doc.getElementsByClass("rtl").also { element->
-                        entries.clear()
-                        for (i in 0 until element.size) {
-                            val text = element[i].text().toString()
-                            if (!text.isNullOrEmpty()) {
-                                text.split(" ")?.toCollection(entries)
-                            }
+                Jsoup.parse(html).also { doc ->
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        doc.getElementsByClass("rtl").also { elements ->
+                            Log.d("ElementsSize: ", elements.size.toString())
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                entries.clear()
+                                for (i in 0 until elements.size) {
+                                    val text = elements[i].text().toString()
+                                    if (!text.isNullOrEmpty()) {
+                                        text.split(" ")?.toCollection(entries)
+                                    }
+                                }
+                                onJavaScriptFinish.onFinish(entries)
+                            }, 300)
                         }
-                        onJavaScriptFinish.onFinish(entries)
-                    }
+                    }, 300)
                 }
             }
         }
@@ -70,30 +76,33 @@ class MainViewModel(
 
     var onJavaScriptFinish = object : OnJavaScriptFinish {
         override fun onFinish(wordsList: ArrayList<String>) {
-            wordModels = ArrayList()
+            var newWordModels: ArrayList<WordModel> = ArrayList()
             for (word in wordsList) {
-                var foundIndex = getIndexByProperty(word)
+                var foundIndex = getIndexByProperty(word, newWordModels)
                 if (foundIndex == -1) {
-                    wordModels?.add(WordModel(word, 1, ""))
+                    newWordModels.add(WordModel(word, 1, ""))
                 } else {
-                    wordModels?.set(foundIndex, WordModel(word, wordModels!![foundIndex].count!! + 1, ""))
+                    newWordModels[foundIndex] =
+                        WordModel(word, newWordModels[foundIndex].count!! + 1, "")
                 }
             }
             isShowLoader.value = false
             isShowError.value = false
-            if (wordModels.isNullOrEmpty()){
+            if (newWordModels.isNullOrEmpty()) {
                 isShowNoData.value = true
-            }else{
+            } else {
+                isShowNoData.value = false
+                wordModels = ArrayList()
+                wordModels = newWordModels
                 recyclerWordsAdapter.setList(wordModels!!)
                 recyclerWordsAdapter.notifyDataSetChanged()
             }
         }
-
     }
 
-    fun getIndexByProperty(word: String): Int {
-        for (i in 0 until wordModels?.size!!) {
-            if (wordModels!![i] != null && wordModels!![i].word?.compareTo(word) == 0) {
+    fun getIndexByProperty(word: String, list: ArrayList<WordModel>): Int {
+        for (i in 0 until list.size) {
+            if (list[i].word?.compareTo(word) == 0) {
                 return i
             }
         }
