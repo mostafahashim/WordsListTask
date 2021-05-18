@@ -2,6 +2,7 @@ package words.list.task.view.activity.baseActivity
 
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
 import words.list.task.MyApplication
 import words.list.task.R
 import words.list.task.util.Preferences
@@ -12,6 +13,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import words.list.task.model.database.AppDatabase
 import kotlin.coroutines.CoroutineContext
 
 open class BaseActivityViewModel(
@@ -20,6 +22,11 @@ open class BaseActivityViewModel(
     lateinit var baseViewModelObserver: BaseViewModelObserver
 
     var baseCompositeDisposable = CompositeDisposable()
+    var db: AppDatabase = Room.databaseBuilder(
+        application.applicationContext,
+        AppDatabase::class.java,
+        "WordsListDB"
+    ).build()
 
     init {
     }

@@ -18,7 +18,6 @@ import words.list.task.R
 import words.list.task.databinding.ActivityMainBinding
 import words.list.task.view.activity.baseActivity.BaseActivity
 
-
 class MainActivity : BaseActivity(
     R.string.app_name, false, true, true,
     false, false, false, false, true,
@@ -45,7 +44,7 @@ class MainActivity : BaseActivity(
         createWebView()
     }
 
-    fun createWebView() {
+    private fun createWebView() {
         try {
             val browser = WebView(this)
             browser.visibility = View.INVISIBLE
@@ -63,9 +62,11 @@ class MainActivity : BaseActivity(
             )
             browser.webViewClient = object : WebViewClient() {
                 override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                    binding.viewModel?.isShowLoader?.value = true
-                    binding.viewModel?.isShowError?.value = false
-                    binding.viewModel?.isShowNoData?.value = false
+                    if (binding.viewModel?.wordModels.isNullOrEmpty()) {
+                        binding.viewModel?.isShowLoader?.value = true
+                        binding.viewModel?.isShowError?.value = false
+                        binding.viewModel?.isShowNoData?.value = false
+                    }
                     super.onPageStarted(view, url, favicon)
                 }
 
@@ -78,13 +79,14 @@ class MainActivity : BaseActivity(
                     request: WebResourceRequest?,
                     error: WebResourceError?
                 ) {
-                    binding.viewModel?.isShowLoader?.value = false
-                    binding.viewModel?.isShowError?.value = true
+                    if (binding.viewModel?.wordModels.isNullOrEmpty()) {
+                        binding.viewModel?.isShowLoader?.value = false
+                        binding.viewModel?.isShowError?.value = true
+                    }
                     super.onReceivedError(view, request, error)
                 }
             }
             browser.loadUrl("https://www.alalmiyalhura.com/")
-            if (supportActionBar != null) supportActionBar!!.setTitle(browser.url)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -117,26 +119,6 @@ class MainActivity : BaseActivity(
             }
         })
 
-    }
-
-    private var doubleBackToExitPressedOnce: Boolean = false
-
-    override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 1) {
-            if (doubleBackToExitPressedOnce) {
-                finish_activity()
-                return
-            }
-            this.doubleBackToExitPressedOnce = true
-            Toast.makeText(
-                this, getString(R.string.press_again_to_exit),
-                Toast.LENGTH_SHORT
-            ).show()
-
-            Handler().postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
-        } else {
-            super.onBackPressed()
-        }
     }
 
 }

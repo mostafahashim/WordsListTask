@@ -127,8 +127,8 @@ class CustomViewBindings {
                     Glide.with(imageView).load(imageUrl)
                         .apply(
                             RequestOptions.bitmapTransform(BlurTransformation(25, 4))
-                                .placeholder(R.drawable.mcu_background)
-                                .error(R.drawable.mcu_background)
+                                .placeholder(R.drawable.layout_bg_transparent_gray_selector_with_bg_transparent)
+                                .error(R.drawable.layout_bg_transparent_gray_selector_with_bg_transparent)
                                 .diskCacheStrategy(
                                     DiskCacheStrategy.ALL
                                 )
@@ -196,8 +196,8 @@ class CustomViewBindings {
                 val requestOptions = RequestOptions.bitmapTransform(transformation)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                 val thumbnail: RequestBuilder<Drawable> = Glide.with(imageView)
-                    .load(R.drawable.image_placeholder)
-                    .apply(requestOptions).error(R.drawable.image_placeholder)
+                    .load(R.drawable.layout_bg_transparent_gray_selector_with_bg_transparent)
+                    .apply(requestOptions).error(R.drawable.layout_bg_transparent_gray_selector_with_bg_transparent)
                 Glide.with(imageView).load(imageUrlRoundTopRectVar)
                     .apply(requestOptions).thumbnail(thumbnail)
                     .into(imageView)
@@ -227,7 +227,7 @@ class CustomViewBindings {
                 val requestOptions = RequestOptions.bitmapTransform(transformation)
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                 val thumbnail: RequestBuilder<Drawable> = Glide.with(imageView)
-                    .load(R.drawable.image_placeholder)
+                    .load(R.drawable.layout_bg_transparent_gray_selector_with_bg_transparent)
                     .apply(requestOptions)
 
                 Glide.with(imageView).load(imageUrlRoundTopRectVar)
