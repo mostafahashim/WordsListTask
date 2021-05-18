@@ -6,15 +6,12 @@ import android.util.Log
 import android.webkit.JavascriptInterface
 import androidx.lifecycle.MutableLiveData
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import words.list.task.MyApplication
 import words.list.task.adapter.RecyclerWordsAdapter
 import words.list.task.model.WordModel
 import words.list.task.observer.OnJavaScriptFinish
 import words.list.task.observer.OnRecyclerItemClickListener
 import words.list.task.view.activity.baseActivity.BaseActivityViewModel
-import java.util.stream.IntStream
 
 class MainViewModel(
     application: MyApplication
@@ -60,7 +57,17 @@ class MainViewModel(
                             Handler(Looper.getMainLooper()).postDelayed({
                                 entries.clear()
                                 for (i in 0 until elements.size) {
-                                    val text = elements[i].text().toString()
+                                    var text = elements[i].text().toString()
+                                    Log.d("textElementsBefore: ", text)
+                                    //\p{Arabic}\s\p{N}
+                                    //\u0621-\u064A
+                                    //^[\u0621-\u064A\s0-9]+$
+                                    //[^a-zA-Z0-9-\u0621-\u064A\s\p{N}]
+                                    text = text.replace(
+                                        "[^a-zA-Z0-9-\\u0620-\\u06FF\\s\\p{N}]".toRegex(),
+                                        " "
+                                    )
+                                    Log.d("textElementsAfter: ", text)
                                     if (!text.isNullOrEmpty()) {
                                         text.split(" ")?.toCollection(entries)
                                     }
@@ -78,12 +85,14 @@ class MainViewModel(
         override fun onFinish(wordsList: ArrayList<String>) {
             var newWordModels: ArrayList<WordModel> = ArrayList()
             for (word in wordsList) {
-                var foundIndex = getIndexByProperty(word, newWordModels)
-                if (foundIndex == -1) {
-                    newWordModels.add(WordModel(word, 1, ""))
-                } else {
-                    newWordModels[foundIndex] =
-                        WordModel(word, newWordModels[foundIndex].count!! + 1, "")
+                if (word.trim().isNotEmpty()) {
+                    var foundIndex = getIndexByProperty(word, newWordModels)
+                    if (foundIndex == -1) {
+                        newWordModels.add(WordModel(word, 1, ""))
+                    } else {
+                        newWordModels[foundIndex] =
+                            WordModel(word, newWordModels[foundIndex].count!! + 1, "")
+                    }
                 }
             }
             isShowLoader.value = false
