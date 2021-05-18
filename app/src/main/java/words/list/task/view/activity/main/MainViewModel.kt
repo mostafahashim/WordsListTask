@@ -4,6 +4,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.webkit.JavascriptInterface
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MutableLiveData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -145,6 +146,7 @@ class MainViewModel(
         )
     }
 
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
     private fun getIndexByProperty(word: String, list: ArrayList<WordModel>): Int {
         for (i in 0 until list.size) {
             if (list[i].word?.compareTo(word) == 0) {

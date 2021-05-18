@@ -53,23 +53,6 @@
     <string name="log_out">Log out</string>
     <string name="empty">Empty</string>
     <string name="no_data_found">No Data found</string>
-    <string name="dot">.</string>
-    <string name="search_for_a_character">Search for a character</string>
-    <string name="description">Description</string>
-    <string name="comics">Comics</string>
-    <string name="events">Events</string>
-    <string name="stories">Stories</string>
-    <string name="series">Series</string>
-    <string name="write_what_you_re_looking_for">Write what you are looking for</string>
-    <string name="create_link" translatable="false">https://%s</string>
-    <string name="artist_with_name" translatable="false">Artist: %s</string>
-    <string name="start_search_to_get_music_list">Start search to get music list</string>
-    <string name="duration_zero">Duration: 00:00</string>
-    <string name="duration_text" translatable="false">Duration: %s:%s</string>
-    <string name="type">Type</string>
-    <string name="artist">Artist</string>
-    <string name="number_of_tracks">Number of Tracks</string>
-    <string name="genre">Genre</string>
 
 </resources>
 

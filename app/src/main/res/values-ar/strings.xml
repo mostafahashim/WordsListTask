@@ -44,21 +44,7 @@
     <string name="cancel_underline"><u>إلغاء</u></string>
     <string name="oh_no">خطأ!</string>
     <string name="log_out">تسجيل الخروج</string>
-    <string name="empty">Empty</string>
-    <string name="no_data_found">No Data found</string>
-    <string name="dot">.</string>
-    <string name="search_for_a_character">Search for a character</string>
-    <string name="description">Description</string>
-    <string name="comics">Comics</string>
-    <string name="events">Events</string>
-    <string name="stories">Stories</string>
-    <string name="series">Series</string>
-    <string name="write_what_you_re_looking_for">Write what you are looking for</string>
-    <string name="start_search_to_get_music_list">Start search to get music list</string>
-    <string name="duration_zero">00:00</string>
-    <string name="type">Type</string>
-    <string name="artist">Artist</string>
-    <string name="number_of_tracks">Number of Tracks</string>
-    <string name="genre">Genre</string>
+    <string name="empty">فارغ</string>
+    <string name="no_data_found">لا يوجد بيانات</string>
 
 </resources>
