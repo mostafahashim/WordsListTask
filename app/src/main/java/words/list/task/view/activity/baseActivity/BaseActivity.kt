@@ -51,10 +51,10 @@ abstract class BaseActivity(
 
     fun updateLocale() {
         //update activities locale
-        if (Preferences.getApplicationLocale().compareTo("en") == 0) {
-            forceLTRIfSupported()
-        } else {
+        if (Preferences.getApplicationLocale().compareTo("ar") == 0) {
             forceRTLIfSupported()
+        } else {
+            forceLTRIfSupported()
         }
         //Update the locale here before loading the layout to get localized strings for activity.
         LocaleHelper.updateLocale(this)

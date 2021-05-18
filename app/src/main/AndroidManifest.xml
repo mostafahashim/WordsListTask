@@ -31,7 +31,6 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
-
     <application
         android:name=".MyApplication"
         android:allowBackup="false"
@@ -41,7 +40,7 @@
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/splash_logo_round"
-        android:supportsRtl="true"
+        android:supportsRtl="false"
         android:theme="@style/Theme.WordsListTask"
         android:usesCleartextTraffic="${usesCleartextTraffic}"
         tools:replace="android:allowBackup,android:theme,android:supportsRtl">
@@ -67,12 +66,6 @@
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar.DarkScreen" />
 
-        <activity
-            android:name=".view.activity.characterDetails.CharacterDetailsActivity"
-            android:configChanges="density|keyboard|keyboardHidden|orientation|screenSize|locale|layoutDirection"
-            android:hardwareAccelerated="true"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar.LightScreen" />
     </application>
 
 </manifest>

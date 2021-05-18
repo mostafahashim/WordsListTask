@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import words.list.task.R
 import words.list.task.databinding.ItemProgressLoadingBinding
 import words.list.task.observer.OnRecyclerItemClickListener
-import hk.ids.gws.android.sclick.SClick
 import words.list.task.databinding.ItemRecyclerWordsBinding
 import words.list.task.model.WordModel
 
@@ -60,9 +59,7 @@ class RecyclerWordsAdapter(
 
 
         holder.binding.layoutItemRecyclerService.setOnClickListener {
-            if (SClick.check(SClick.BUTTON_CLICK)) {
-                onRecyclerItemClickListener.onRecyclerItemClickListener(position)
-            }
+            onRecyclerItemClickListener.onRecyclerItemClickListener(position)
         }
 
     }
